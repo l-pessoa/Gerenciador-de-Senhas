@@ -118,7 +118,7 @@ if (btnResendOtp) {
 }
 
 // Sign-UP
-const registerForm = document.getElementById('registerForm');
+const registerForm = document.getElementById('signupForm');
 if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
