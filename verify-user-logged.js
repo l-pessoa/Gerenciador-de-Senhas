@@ -33,8 +33,12 @@ async function fetchUserData() {
             }
 
         } else {
-            // Invalid token or expired
-            // logout();
+            alert("Token expired or invalid. Please log in again.");
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userID');
+            localStorage.removeItem('username');
+            
+            window.location.href = 'login.html';
         }
     } catch (error) {
         console.error('Error in user search:', error);
