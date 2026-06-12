@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PPM - Verify OTP</title>
+    <script src="verify-user-logged.js"></script>
+</head>
+<body>
+    <div class="auth-container">
+        <h2>VERIFY OTP</h2>
+        <form id="verifyOtpForm">
+            <div class="input-group">
+                <label for="otp">OTP</label>
+                <input type="number" id="otp" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <p>Issues? <a href="#" id="btn-otp">Resend OTP</a></p>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>
