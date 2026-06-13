@@ -8,7 +8,7 @@ async function fetchUserData() {
         if (PATHNAME.includes('login.html') || PATHNAME.includes('signup.html') || PATHNAME.includes('verify-otp.html')){
             return;
         }
-        window.location.href = 'login.html';
+        window.location.href = 'pages/login.html';
         return;
     }
 
@@ -29,7 +29,7 @@ async function fetchUserData() {
 
             // if user is on login or signup page, redirect to home
             if (PATHNAME.includes('login.html') || PATHNAME.includes('signup.html') || PATHNAME.includes('verify-otp.html')){
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
             }
 
         } else {

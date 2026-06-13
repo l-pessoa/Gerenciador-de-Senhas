@@ -76,7 +76,7 @@ if (verifyOtpForm) {
                 localStorage.setItem('authToken', data.authToken);
                 localStorage.removeItem('username');
                 localStorage.removeItem('userID');
-                window.location.href = 'index.html';
+                window.location.href = '../index.html';
             } else {
                 console.error(`[OTP Verification] Error: ${data.message}`);
                 alert('Invalid OTP. Please try again.');
