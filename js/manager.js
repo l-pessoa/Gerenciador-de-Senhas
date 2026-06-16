@@ -23,7 +23,7 @@ const FILTROS = {
                 ],
   'Jogos':     ['steam', 'epic', 'riot', 'xbox', 'psn', 'playstation', 'roblox', 'hytale',
                 'rainboow', 'supercell', 'blizzard', 'origin', 'gog', 'ubisoft', 'nintendo',
-                'rockstar', 'epicgames'
+                'rockstar', 'epicgames', 'riotgames'
                 ],
   'Social':    ['instagram', 'facebook', 'twitter', 'x', 'tiktok', 'discord', 'linkedin', 'pinterest',
                 'twitter', 'reddit', 'snapchat', 'telegram', 'whatsapp', 'messenger'
