@@ -76,9 +76,6 @@ if (verifyOtpForm) {
                 localStorage.setItem('authToken', data.authToken);
                 localStorage.removeItem('username');
                 localStorage.removeItem('userID');
-                console.log('OTP verified successfully!');
-                console.log('Auth Token:', data.authToken);
-                alert('indo para index')
                 window.location.href = '../index.html';
             } else {
                 console.error(`[OTP Verification] Error: ${data.message}`);
@@ -126,42 +123,41 @@ if (registerForm) {
     registerForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        const nome = document.getElementById('name').value;
+        const username = document.getElementById('username').value;
         const email = document.getElementById('email').value;
-        const senha = document.getElementById('password').value;
+        const password = document.getElementById('password').value;
+        const confirm_password = document.getElementById('confirm_password').value;
 
+        if (password.length < 8) {
+            alert('Password must be at least 8 characters long.');
+            return;
+        }
+        
+        if (password !== confirm_password) {
+            alert("Passwords doesn't match.");
+            return;
+        }
+        
         try {
             const response = await fetch(`${BASE_URL}/auth/signup`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nome: nome, email: email, senha: senha })
+                body: JSON.stringify({ username, email, password, confirm_password })
             });
 
             const data = await response.json();
 
             if (response.ok) {
-                alert('Cadastro realizado com sucesso! Faça login.');
-                window.location.href = 'index.html';
+                alert('Registration successful! Please log in with your credentials.');
+                window.location.href = '../index.html';
             } else {
-                alert(`Erro no cadastro: ${data.message || 'Verifique os dados.'}`);
+                alert(`Error during registration: ${data.message || 'Please check your details.'}`);
             }
         } catch (error) {
-            console.error('Erro ao conectar com o Xano:', error);
-            alert('Erro de conexão com o servidor.');
+            console.error('Error connecting to Xano:', error);
+            alert('Connection error with the server.');
         }
-    });
-}
-
-// LOGOUT
-const btnLogout = document.getElementById('btn-logout');
-if (btnLogout) {
-    btnLogout.addEventListener('click', async (e) => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userID');
-        localStorage.removeItem('username');
-
-        window.location.href = 'login.html';
     });
 }
