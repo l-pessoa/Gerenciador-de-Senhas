@@ -5,8 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PPM</title>
     <script src="js/verify-user-logged.js"></script>
+    <style>
+        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
+        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 300px; display: flex; flex-direction: column; gap: 10px; }
+        .actions-btn { display: flex; gap: 5px; }
+    </style>
 </head>
 <body>
-    <h1>Bem-vindo ao PPM</h1>
+
+    <h1 id="welcomeMessage"></h1>
+
+    <div style="margin-bottom: 20px; display: flex; gap: 10px;">
+        <input type="text" id="searchInput" placeholder="Search by Service" style="padding: 8px; width: 300px;">
+        <button id="openCreateModalBtn" style="padding: 8px 15px; cursor: pointer;">+ New Password</button>
+    </div>
+
+    <table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Username</th>
+                <th>Description</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="passwordsTableBody">
+            </tbody>
+    </table>
+
+    <div id="passwordModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle">New Password</h3>
+            <input type="text" id="formTag" placeholder="Service (ex: Netflix)" required>
+            <input type="email" id="formEmail" placeholder="Email" required>
+            <input type="text" id="formPassword" placeholder="Password" required>
+            <input type="text" id="formUsername" placeholder="Username (optional)">
+            <textarea id="formDescription" placeholder="Description (optional)"></textarea>
+            
+            <div class="actions-btn">
+                <button id="savePasswordBtn" style="background: green; color: white; padding: 5px 10px;">Save</button>
+                <button id="closeModalBtn" style="background: grey; color: white; padding: 5px 10px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/manager.js"></script>
 </body>
 </html>

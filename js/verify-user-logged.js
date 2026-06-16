@@ -30,6 +30,12 @@ async function fetchUserData() {
             // if user is on login or signup page, redirect to home
             if (PATHNAME.includes('login.html') || PATHNAME.includes('signup.html') || PATHNAME.includes('verify-otp.html')){
                 window.location.href = '../index.html';
+                return;
+            }
+            
+            // display welcome message
+            if (document.getElementById('welcomeMessage')) {
+                document.getElementById('welcomeMessage').textContent = `Welcome, ${data.username}!`;
             }
 
         } else {
@@ -38,7 +44,7 @@ async function fetchUserData() {
             localStorage.removeItem('userID');
             localStorage.removeItem('username');
             
-            window.location.href = 'login.html';
+            window.location.href = 'pages/login.html';
         }
     } catch (error) {
         console.error('Error in user search:', error);
