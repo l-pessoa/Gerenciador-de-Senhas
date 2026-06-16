@@ -1,6 +1,7 @@
 const __BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io/api:Whyi2nVf/gs';
 const authToken = localStorage.getItem('authToken');
 let passwords = [];
+let editingPasswordId = null;
 
 // fetch passwords
 async function fetchPasswords() {
@@ -9,15 +10,16 @@ async function fetchPasswords() {
             method: 'GET',
             headers: { 'Authorization': `Bearer ${authToken}` }
         });
-        if (!response.ok) throw new Error('Erro ao buscar senhas do servidor');
+        if (!response.ok) throw new Error('Xano Error: Error loading data from server');
 
         const data = await response.json();
         if (data && Array.isArray(data)) {
             passwords = data.map(item => ({
                 id: item.id,
-                service: item.service,
-                email: item.email,              
-                password: item.password,      
+                last_modified: formatTimestamp(item.last_modified),
+                service: item.service || 'No service',
+                email: item.email || '-',              
+                password: item.password || '-',      
                 username: item.username || '-',
                 description: item.description || '-'
             }));
@@ -42,7 +44,7 @@ function displayPasswords(filterText = '') {
     );
 
     if (filteredPasswords.length === 0) {
-        tableBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">No passwords found.</td></tr>';
+        tableBody.innerHTML = '<tr><td colspan="7" style="text-align: center;">No passwords found.</td></tr>';
         return;
     }
 
@@ -55,8 +57,10 @@ function displayPasswords(filterText = '') {
             <td><code>${pass.password}</code></td>
             <td>${pass.username}</td>
             <td>${pass.description}</td>
+            <td>${pass.last_modified}</td>
             <td>
                 <div class="actions-btn">
+                    <button onclick="openEditModal(${pass.id})" style="background: blue; color: white; border: none; padding: 3px 8px; cursor: pointer;">Edit</button>
                     <button onclick="deletePassword(${pass.id})" style="background: red; color: white; border: none; padding: 3px 8px; cursor: pointer;">Delete</button>
                 </div>
             </td>
@@ -66,8 +70,26 @@ function displayPasswords(filterText = '') {
     });
 }
 
-// New password
-async function createPassword() {
+// Edit Modal
+function openEditModal(id) {
+    const pass = passwords.find(p => p.id === id);
+    if (!pass) return;
+
+    editingPasswordId = id;
+
+    document.getElementById('modalTitle').textContent = 'Edit Password';
+
+    document.getElementById('formTag').value = pass.service === 'No service' ? '' : pass.service;
+    document.getElementById('formEmail').value = pass.email === '-' ? '' : pass.email;
+    document.getElementById('formPassword').value = pass.password === '-' ? '' : pass.password;
+    document.getElementById('formUsername').value = pass.username === '-' ? '' : pass.username;
+    document.getElementById('formDescription').value = pass.description === '-' ? '' : pass.description;
+
+    modal.style.display = 'block';
+}
+
+// Create or Update password
+async function savePassword() {
     const service = document.getElementById('formTag').value;
     const username = document.getElementById('formUsername').value;
     const email = document.getElementById('formEmail').value;
@@ -79,11 +101,19 @@ async function createPassword() {
         return;
     }
 
-    const bodyData = { service, username, email, password, description };
+    const bodyData = { service, email, password, username, description };
+
+    let url = `${__BASE_URL}/passwd`;
+    let method = 'POST';
+
+    if (editingPasswordId !== null) {
+        url = `${__BASE_URL}/password/${editingPasswordId}`;
+        method = 'PATCH';
+    }
 
     try {
-        const response = await fetch(`${__BASE_URL}/passwd`, {
-            method: 'POST',
+        const response = await fetch(url, {
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${authToken}`
@@ -91,20 +121,19 @@ async function createPassword() {
             body: JSON.stringify(bodyData)
         });
 
-        if (!response.ok) throw new Error('Xano Error: Error saving password');
-
-        alert('Password saved successfully!');
+        if (!response.ok) throw new Error(`Xano Error: Error processing password request via ${method}`);
+        
+        alert(editingPasswordId !== null ? 'Password updated successfully!' : 'Password saved successfully!');
         closeModal();
-        // Atualiza a tela local recarregando os dados
         await init();
 
     } catch (error) {
         console.error(error);
-        alert('Could not save the password.');
+        alert('Could not save or update the password.');
     }
 }
 
-// --- 4. EXCLUIR SENHA (DELETE) ---
+// Delete password
 async function deletePassword(id) {
     if (!confirm('Have you sure you want to delete this password?')) return;
 
@@ -117,7 +146,6 @@ async function deletePassword(id) {
         if (!response.ok) throw new Error('Xano Error: Error deleting password');
 
         alert('Password removed!');
-        // Atualiza os dados
         await init();
 
     } catch (error) {
@@ -130,6 +158,8 @@ async function deletePassword(id) {
 const modal = document.getElementById('passwordModal');
 
 document.getElementById('openCreateModalBtn').addEventListener('click', () => {
+    editingPasswordId = null;
+    document.getElementById('modalTitle').textContent = 'New Password';
 
     document.getElementById('formTag').value = '';
     document.getElementById('formUsername').value = '';
@@ -141,12 +171,43 @@ document.getElementById('openCreateModalBtn').addEventListener('click', () => {
 
 function closeModal() { modal.style.display = 'none'; }
 document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-document.getElementById('savePasswordBtn').addEventListener('click', createPassword);
+
+document.getElementById('savePasswordBtn').addEventListener('click', savePassword);
 
 document.getElementById('searchInput').addEventListener('input', (e) => {
     displayPasswords(e.target.value);
 });
 
+// Utility function to format timestamps
+function formatTimestamp(timestamp) {
+    if (!timestamp) return '-';
+    
+    const dateElement = new Date(Number(timestamp));
+    
+    if (isNaN(dateElement.getTime())) return '-';
+
+    return dateElement.toLocaleString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+// Logout
+const logoutButton = document.getElementById('logoutBtn');
+if (logoutButton) {
+    logoutButton.addEventListener('click', () => {
+        localStorage.removeItem('authToken');
+        localStorage.removeItem('userID');
+        localStorage.removeItem('username');
+
+        alert('You have been logged out.');
+
+        window.location.href = 'pages/login.html'; 
+    });
+}
 
 // MAIN FLOW
 async function init() {
