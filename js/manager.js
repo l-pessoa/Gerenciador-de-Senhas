@@ -12,7 +12,7 @@ import { AUTO_LOCK_MINUTES, CLIPBOARD_CLEAR_SEC } from './config.js';
 // Fonte de verdade: edite só aqui.
 const FILTROS = {
   'Streamings':['netflix', 'spotify', 'disney', 'prime', 'max', 'paramount', 'hbo', 'globoplay', 'deezer',
-                'twitch', 'crunchyroll', 'apple', 'soundcloud', 'kick', 'zoom', 'tomato'
+                'twitch', 'crunchyroll', 'apple', 'soundcloud', 'kick', 'zoom', 'tomato', 'disney+'
                 ],
   'Dev':       ['github', 'gitlab', 'vercel', 'xano', 'heroku', 'digitalocean',
                 'aws', 'azure', 'cloud', 'firebase', 'hackerone', 'microsoft', 
@@ -22,7 +22,8 @@ const FILTROS = {
                 'mercadopago', 'banco', 'xp', 'mercado pago'
                 ],
   'Jogos':     ['steam', 'epic', 'riot', 'xbox', 'psn', 'playstation', 'roblox', 'hytale',
-                'rainboow', 'supercell', 'blizzard', 'origin', 'gog', 'ubisoft', 'nintendo'
+                'rainboow', 'supercell', 'blizzard', 'origin', 'gog', 'ubisoft', 'nintendo',
+                'rockstar', 'epicgames'
                 ],
   'Social':    ['instagram', 'facebook', 'twitter', 'x', 'tiktok', 'discord', 'linkedin', 'pinterest',
                 'twitter', 'reddit', 'snapchat', 'telegram', 'whatsapp', 'messenger'
@@ -142,9 +143,22 @@ function buildCard(p) {
     if (view === 'favorites') render();
   } }, icon('ti-star'));
 
+  // Tratamento do nome para a URL do Simple Icons
+  const iconName = p.service.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+
   const rows = [
     el('div', { class: 'card-top' }, [
-      el('div', { class: 'svc-ic', style: `background:${logo.bg};color:${logo.fg}`, text: logo.initials }),
+      el('div', { class: 'svc-ic', style: 'background: transparent; display: flex; align-items: center; justify-content: center; padding: 4px;' }, [
+        el('img', {
+          src: `https://simpleicons.org/icons/${iconName}.svg`,
+          alt: p.service,
+          style: 'width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1);',
+          onerror: (e) => {
+            e.target.onerror = null;
+            e.target.src = 'https://simpleicons.org/icons/cloudera.svg';
+          }
+        })
+      ]),
       el('div', { class: 'svc-meta' }, [
         el('div', { class: 'name', text: p.service }),
         el('div', { class: 'cat', text: p.category }),
@@ -258,9 +272,19 @@ function renderSecurity(area) {
   } else {
     const list = el('div', { class: 'sec-list' });
     weakList.forEach((p) => {
-      const logo = iconFor(p.service);
+      const iconName = p.service.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
       list.append(el('div', { class: 'sec-item' }, [
-        el('div', { class: 'svc-ic', style: `background:${logo.bg};color:${logo.fg}`, text: logo.initials }),
+        el('div', { class: 'svc-ic', style: 'background: transparent; display: flex; align-items: center; justify-content: center; padding: 4px;' }, [
+          el('img', {
+            src: `https://simpleicons.org/icons/${iconName}.svg`,
+            alt: p.service,
+            style: 'width: 100%; height: 100%; object-fit: contain; filter: brightness(0) invert(1);',
+            onerror: (e) => {
+              e.target.onerror = null;
+              e.target.src = 'https://simpleicons.org/icons/cloudera.svg';
+            }
+          })
+        ]),
         el('div', { class: 'grow' }, [el('div', { text: p.service }), el('div', { class: 'muted', text: p.category })]),
         el('span', { class: 'sec-badge weak', text: 'Fraca' }),
         el('button', { class: 'btn btn-sm', text: 'Melhorar', onClick: () => openModal(p) }),
