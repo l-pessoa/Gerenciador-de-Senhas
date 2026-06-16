@@ -57,7 +57,7 @@ function displayPasswords(filterText = '') {
             <td>${pass.description}</td>
             <td>
                 <div class="actions-btn">
-                    <button onclick="deletePassword(${pass.id})" style="background: red; color: white; border: none; padding: 3px 8px; cursor: pointer;">Deletar</button>
+                    <button onclick="deletePassword(${pass.id})" style="background: red; color: white; border: none; padding: 3px 8px; cursor: pointer;">Delete</button>
                 </div>
             </td>
         `;
