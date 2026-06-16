@@ -1,0 +1,12 @@
+/* tokens.css — o "tema" do PPM. Toda cor/medida sai daqui. */
+:root {
+  --bg:#0d1014; --side:#0a0d11; --surf:#161b22; --surf2:#1b212a;
+  --line:#232a33; --line2:#2c343f;
+  --tx:#e7eaef; --tx2:#9aa3af; --tx3:#6b7480;
+  --acc:#16a394; --acc-h:#1cc1af; --acc-bg:rgba(22,163,148,.13);
+  --strong:#2dd4a7; --mid:#e3b341; --weak:#f0616d;
+  --radius:12px; --radius-lg:15px;
+  --font:'Inter',system-ui,sans-serif;
+  --font-display:'Space Grotesk',sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}

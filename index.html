@@ -1,59 +1,68 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPM</title>
-    <script src="js/verify-user-logged.js"></script>
-    <style>
-        .modal { display: none; position: fixed; z-index: 1; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); }
-        .modal-content { background-color: #fefefe; margin: 15% auto; padding: 20px; border: 1px solid #888; width: 300px; display: flex; flex-direction: column; gap: 10px; }
-        .actions-btn { display: flex; gap: 5px; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPM — Cofre</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.6.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/vault.css">
 </head>
 <body>
-
-    <h1 id="welcomeMessage"></h1>
-    <button id="logoutBtn" type="button">Logout</button>
-
-
-    <div style="margin-bottom: 20px; display: flex; gap: 10px;">
-        <input type="text" id="searchInput" placeholder="Search by Service" style="padding: 8px; width: 300px;">
-        <button id="openCreateModalBtn" style="padding: 8px 15px; cursor: pointer;">+ New Password</button>
-    </div>
-
-    <table border="1" style="border-collapse: collapse; width: 100%; text-align: left;">
-        <thead>
-            <tr>
-                <th>Service</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Username</th>
-                <th>Description</th>
-                <th>Last Modified</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody id="passwordsTableBody">
-            </tbody>
-    </table>
-
-    <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <h3 id="modalTitle">New Password</h3>
-            <input type="text" id="formTag" placeholder="Service (ex: Netflix)" required>
-            <input type="email" id="formEmail" placeholder="Email" required>
-            <input type="text" id="formPassword" placeholder="Password" required>
-            <input type="text" id="formUsername" placeholder="Username (optional)">
-            <textarea id="formDescription" placeholder="Description (optional)"></textarea>
-            
-            <div class="actions-btn">
-                <button id="savePasswordBtn" style="background: green; color: white; padding: 5px 10px;">Save</button>
-                <button id="closeModalBtn" style="background: grey; color: white; padding: 5px 10px;">Cancel</button>
-            </div>
+  <div class="app">
+    <aside class="side">
+      <div class="brand"><span class="mark"><i class="ti ti-shield-lock"></i></span> PPM</div>
+      <nav class="nav">
+        <a class="nav-item on" data-view="cofre" href="#"><i class="ti ti-key"></i> Cofre</a>
+        <a class="nav-item" data-view="favorites" href="#"><i class="ti ti-star"></i> Favoritos</a>
+        <a class="nav-item" data-view="categories" href="#"><i class="ti ti-folder"></i> Categorias</a>
+        <a class="nav-item" data-view="security" href="#"><i class="ti ti-shield-check"></i> Segurança</a>
+        <a class="nav-item" data-view="settings" href="#"><i class="ti ti-settings"></i> Ajustes</a>
+      </nav>
+      <div class="side-foot">
+        <div class="score-card">
+          <div class="lbl"><i class="ti ti-shield-check"></i> Saúde do cofre</div>
+          <div class="val" id="vaultHealth">—</div>
+          <div class="score-bar"><span id="vaultHealthBar"></span></div>
         </div>
-    </div>
+        <button id="logoutBtn" class="logout"><i class="ti ti-logout"></i> Sair</button>
+      </div>
+    </aside>
 
-    <script src="js/manager.js"></script>
+    <section class="main">
+      <header class="top">
+        <h1 id="viewTitle">Cofre</h1>
+        <div class="search"><i class="ti ti-search"></i><input id="searchInput" placeholder="Buscar serviço..."></div>
+        <button id="openCreateModalBtn" class="add"><i class="ti ti-plus"></i> Nova senha</button>
+        <div class="ava" id="userAvatar">·</div>
+      </header>
+
+      <div class="body">
+        <div id="viewArea"></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" id="passwordModal">
+    <div class="modal-content">
+      <h3 id="modalTitle">Nova senha</h3>
+      <div class="field"><label for="formService">Serviço</label><input class="input" id="formService" placeholder="Ex: Netflix"></div>
+      <div class="field"><label for="formEmail">E-mail</label><input class="input" id="formEmail" type="email" placeholder="email@exemplo.com"></div>
+      <div class="field"><label for="formPassword">Senha</label><input class="input" id="formPassword" placeholder="a senha do serviço"></div>
+      <div class="field"><label for="formUsername">Usuário (opcional)</label><input class="input" id="formUsername"></div>
+      <div class="field"><label for="formDescription">Descrição (opcional)</label><textarea class="input" id="formDescription"></textarea></div>
+      <div class="modal-actions">
+        <button id="closeModalBtn" class="btn">Cancelar</button>
+        <button id="savePasswordBtn" class="btn btn-primary">Salvar</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/manager.js"></script>
 </body>
 </html>

@@ -1,28 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PPM - Login</title>
-    <script src="../js/verify-user-logged.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PPM — Entrar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.6.0/dist/tabler-icons.min.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="../assets/css/auth.css">
 </head>
 <body>
-    <div class="auth-container">
-        <h2>LOGIN</h2>
-        <form id="loginForm">
-            <div class="input-group">
-                <label for="username">Username</label>
-                <input type="username" id="username" required>
-            </div>
-            <div class="input-group">
-                <label for="password">Senha</label>
-                <input type="password" id="password" required>
-            </div>
-            <button type="submit">Login</button>
-        </form>
-        <p>Don't have an account? <a href="signup.html">Sign-up</a></p>
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-brand"><span class="mark"><i class="ti ti-shield-lock"></i></span> PPM</div>
+      <h2>Entrar</h2>
+      <p class="auth-sub">Acesse seu cofre</p>
+      <form id="loginForm">
+        <div class="field">
+          <label for="username">Usuário</label>
+          <input class="input" id="username" autocomplete="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Senha</label>
+          <div class="pw-field">
+            <input class="input" id="password" type="password" autocomplete="current-password" required>
+            <button type="button" class="pw-ico toggle js-toggle-pw" data-target="password" aria-label="Mostrar senha"><i class="ti ti-eye"></i></button>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Entrar</button>
+      </form>
+      <p class="auth-alt">Não tem conta? <a href="signup.html">Criar conta</a></p>
     </div>
-
-    <script src="../js/auth.js"></script>
+  </div>
+  <script type="module" src="../js/auth.js"></script>
 </body>
 </html>

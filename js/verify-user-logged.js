@@ -1,55 +1,30 @@
-const _BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io/api:Whyi2nVf/gs';
-const _token = localStorage.getItem('authToken');
-const PATHNAME = window.location.pathname
+// verify-user-logged.js — o "porteiro": confere a sessão e redireciona.
+// ensureAuth() roda nas páginas protegidas; redirectIfLoggedIn() nas de auth.
 
-// search for the token in localStorage and redirect to login if not found
-async function fetchUserData() {
-    if (!_token) {
-        if (PATHNAME.includes('login.html') || PATHNAME.includes('signup.html') || PATHNAME.includes('verify-otp.html')){
-            return;
-        }
-        window.location.href = 'pages/login.html';
-        return;
-    }
+import { api } from './api/http.js';
 
-    try {
-        const response = await fetch(`${_BASE_URL}/auth/me`, {
-            method: 'GET',
-            headers: {
-                'Authorization': `Bearer ${_token}`
-            }
-        });
+const inPages = () => location.pathname.includes('/pages/');
+const loginUrl = () => (inPages() ? 'login.html' : 'pages/login.html');
+const homeUrl  = () => (inPages() ? '../index.html' : 'index.html');
 
-        const data = await response.json();
-
-        if (response.ok) {
-            // store user data in localStorage for later use
-            localStorage.setItem('userID', data.id);
-            localStorage.setItem('username', data.username);
-
-            // if user is on login or signup page, redirect to home
-            if (PATHNAME.includes('login.html') || PATHNAME.includes('signup.html') || PATHNAME.includes('verify-otp.html')){
-                window.location.href = '../index.html';
-                return;
-            }
-            
-            // display welcome message
-            if (document.getElementById('welcomeMessage')) {
-                document.getElementById('welcomeMessage').textContent = `Welcome, ${data.username}!`;
-            }
-
-        } else {
-            alert("Token expired or invalid. Please log in again.");
-            localStorage.removeItem('authToken');
-            localStorage.removeItem('userID');
-            localStorage.removeItem('username');
-            
-            window.location.href = 'pages/login.html';
-        }
-    } catch (error) {
-        console.error('Error in user search:', error);
-    }
+export async function ensureAuth() {
+  const token = localStorage.getItem('authToken');
+  if (!token) { location.href = loginUrl(); return null; }
+  try {
+    const me = await api('/auth/me');
+    localStorage.setItem('userID', me.id);
+    localStorage.setItem('username', me.username);
+    return me;
+  } catch {
+    // api() já trata o 401; aqui cobre o resto
+    location.href = loginUrl();
+    return null;
+  }
 }
 
-// MAIN - Verify if user is logged
-fetchUserData();
+export async function redirectIfLoggedIn() {
+  const token = localStorage.getItem('authToken');
+  if (!token) return;
+  try { await api('/auth/me'); location.href = homeUrl(); }
+  catch { localStorage.removeItem('authToken'); }
+}
