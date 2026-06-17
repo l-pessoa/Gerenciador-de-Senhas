@@ -315,7 +315,14 @@ export const FILTROS = {
     "obsstudio",
     "streamlabs",
     "scratch",
-    "nexusmods"
+    "nexusmods",
+    "huawei",
+    "cpanel",
+    "servidor",
+    "hostinger",
+    "hostgator",
+    "kinghost",
+    "locaweb"
   ],
   "Bancos": [
     "nubank",
@@ -380,7 +387,8 @@ export const FILTROS = {
     "dogecoin",
     "litecoin",
     "tether",
-    "cardano"
+    "cardano",
+    "caixa"
   ],
   "Jogos": [
     "steam",
@@ -432,7 +440,8 @@ export const FILTROS = {
     "modrinth",
     "chessdotcom",
     "gamebanana",
-    "speedrundotcom"
+    "speedrundotcom",
+    "rockstar"
   ],
   "Social": [
     "instagram",
@@ -481,7 +490,8 @@ export const FILTROS = {
     "lemmy",
     "pixelfed",
     "peertube",
-    "googlechat"
+    "googlechat",
+    "pastebin"
   ],
   "Email": [
     "outlook",
@@ -697,6 +707,24 @@ export const FILTROS = {
     "hoka",
     "victoriassecret",
     "ralphlauren"
+  ],
+  "Hacking": [
+    "tryhackme",
+    "hackthebox",
+    "splunk",
+    "wazuh",
+    "portswigger",
+    "hackerone"
+  ],
+  "Navegadores": [
+    "firefox",
+    "chrome",
+    "edge",
+    "brave",
+    "vivaldi",
+    "duckduckgo",
+    "opera",
+    "operagx"
   ]
 };
 
@@ -723,5 +751,9 @@ export const ALIASES = {
   "bk": "burgerking",
   "magalu": "magazineluiza",
   "magazine": "magazineluiza",
-  "tomato": "rottentomatoes"
+  "tomato": "rottentomatoes",
+  "chrome": "googlechrome",
+  "edge": "microsoftedge",
+  "rockstar": "rockstargames",
+  "operagx": "operagx"
 };
