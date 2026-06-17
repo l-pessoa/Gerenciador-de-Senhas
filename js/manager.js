@@ -15,7 +15,7 @@ const FILTROS = {
                 'twitch', 'crunchyroll', 'apple', 'soundcloud', 'kick', 'zoom', 'tomato', 'disney+'
                 ],
   'Dev':       ['github', 'gitlab', 'vercel', 'xano', 'heroku', 'digitalocean',
-                'aws', 'azure', 'cloud', 'firebase', 'hackerone', 'microsoft', 
+                'aws', 'azure', 'cloud', 'firebase', 'microsoft', 
                 'oracle', 'render', 'supabase', 'wordpress', 'redhat', 'huawei',
                 'cpanel', 'servidor', 'hostinger', 'hostgator', 'kinghost', 'locaweb'
                 ],
@@ -41,7 +41,7 @@ const FILTROS = {
                 'loggi', 'droga', 'nike', 'shein', 'adidas', 'reebok', 'fila', 'new balance', 'puma',
                 'asics', 'vans', 'converse', 'aliexpress', 'wish', 'ebay', 'renner', 'mequi', 'burger king', 'bk'
                 ],
-  'Hacking':   ['tryhackme', 'hackthebox', 'splunk', 'wazuh', 'portswigger'
+  'Hacking':   ['tryhackme', 'hackthebox', 'splunk', 'wazuh', 'portswigger', 'hackerone'
                 ],
   'Navegadores':['firefox', 'chrome', 'edge', 'brave', 'vivaldi', 'duckduckgo', 'opera', 'operagx'
                 ]
