@@ -38,7 +38,7 @@
       <header class="top">
         <h1 id="viewTitle">Cofre</h1>
         <div class="search"><i class="ti ti-search"></i><input id="searchInput" placeholder="Buscar serviço..."></div>
-        <button id="openCreateModalBtn" class="add"><i class="ti ti-plus"></i> Nova senha</button>
+        <button id="openCreateModalBtn" class="add"><i class="ti ti-plus"></i><span class="add-label">Nova senha</span></button>
         <div class="ava" id="userAvatar">·</div>
       </header>
 
@@ -47,6 +47,14 @@
       </div>
     </section>
   </div>
+
+  <nav class="bottomnav">
+    <a class="nav-item on" data-view="cofre" href="#"><i class="ti ti-key"></i><span>Cofre</span></a>
+    <a class="nav-item" data-view="favorites" href="#"><i class="ti ti-star"></i><span>Favoritos</span></a>
+    <a class="nav-item" data-view="categories" href="#"><i class="ti ti-folder"></i><span>Categorias</span></a>
+    <a class="nav-item" data-view="security" href="#"><i class="ti ti-shield-check"></i><span>Segurança</span></a>
+    <a class="nav-item" data-view="settings" href="#"><i class="ti ti-settings"></i><span>Ajustes</span></a>
+  </nav>
 
   <div class="modal" id="passwordModal">
     <div class="modal-content">

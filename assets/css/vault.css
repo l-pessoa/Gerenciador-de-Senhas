@@ -97,3 +97,77 @@
 /* usuário do card (só aparece quando preenchido) */
 .row-user{font-size:13px;color:var(--tx2);margin-top:9px;display:flex;align-items:center;gap:7px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
 .row-user i{font-size:15px;color:var(--tx3);}
+
+/* ====== barra de navegação inferior (só no mobile) ====== */
+.bottomnav{display:none;}
+.settings-logout{display:flex;align-items:center;justify-content:center;gap:8px;color:var(--tx2);}
+
+/* ============================================================
+   MOBILE — refeito pra ter cara de app
+   ============================================================ */
+@media (max-width:760px){
+  body{padding:0;}
+  .app{margin:0;border:none;border-radius:0;min-height:100vh;box-shadow:none;}
+  .side{display:none;}
+
+  /* header reorganizado: título + avatar em cima, busca full embaixo */
+  .top{flex-wrap:wrap;gap:10px;padding:14px 16px;position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid var(--line);}
+  .top h1{order:1;flex:1;font-size:19px;}
+  .ava{order:2;}
+  .search{order:3;width:100%;}
+
+  .body{padding:16px 16px 96px;}            /* espaço pra barra de baixo + FAB */
+
+  /* botão "Nova senha" vira botão flutuante (FAB) */
+  .add{position:fixed;right:16px;bottom:80px;z-index:40;width:56px;height:56px;border-radius:50%;
+       padding:0;justify-content:center;box-shadow:0 10px 24px -8px rgba(0,0,0,.7);}
+  .add .add-label{display:none;}
+  .add i{font-size:24px;}
+
+  /* stats e grid */
+  .stats{grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:18px;}
+  .grid{grid-template-columns:1fr;}
+
+  /* chips rolam de lado em vez de quebrar linha */
+  .chips{flex-wrap:nowrap;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  .chips::-webkit-scrollbar{display:none;}
+  .chip{flex:0 0 auto;}
+
+  /* ações do card sempre visíveis (não tem hover no toque) e alvos maiores */
+  .card-acts{opacity:1;}
+  .card:hover{transform:none;}
+  .pw-ico,.icon-btn{width:40px;height:40px;font-size:18px;}
+  .fav{font-size:22px;}
+  .card{padding:15px;}
+
+  /* modal vira "folha" subindo de baixo */
+  .modal{align-items:flex-end;padding:0;}
+  .modal-content{max-width:none;width:100%;border-radius:20px 20px 0 0;
+                 padding:22px 18px calc(20px + env(safe-area-inset-bottom));animation:sheet .22s ease;}
+  @keyframes sheet{from{transform:translateY(100%);}}
+  .input{padding:13px 14px;font-size:16px;}   /* 16px evita zoom automático no iOS */
+  .modal-actions .btn{flex:1;padding:13px;}
+
+  /* settings ocupa a largura toda */
+  .settings{max-width:none;}
+
+  /* toast acima da barra de baixo */
+  .toast{bottom:96px;}
+
+  /* a barra de navegação inferior */
+  .bottomnav{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:45;
+             justify-content:space-around;align-items:stretch;
+             background:var(--side);border-top:1px solid var(--line);
+             padding:6px 4px calc(6px + env(safe-area-inset-bottom));}
+  .bottomnav .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
+                       padding:7px 2px;border-radius:10px;color:var(--tx3);
+                       font-size:10px;font-weight:500;text-decoration:none;}
+  .bottomnav .nav-item i{font-size:21px;}
+  .bottomnav .nav-item span{line-height:1;}
+  .bottomnav .nav-item.on{color:var(--acc-h);}
+}
+
+/* telas bem estreitas: stats em 1 coluna */
+@media (max-width:380px){
+  .stats{grid-template-columns:1fr;}
+}

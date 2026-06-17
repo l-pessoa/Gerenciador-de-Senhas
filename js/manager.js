@@ -6,49 +6,8 @@ import { listPasswords, createPassword, updatePassword, deletePassword } from '.
 import { updateProfile, changePassword, deleteAccount } from './api/profile.api.js';
 import { el, clear } from './lib/dom.js';
 import { scoreStrength } from './lib/strength.js';
-import { iconFor } from './lib/logos.js';
+import { guessCategory, buildServiceIcon } from './lib/logos.js';
 import { AUTO_LOCK_MINUTES, CLIPBOARD_CLEAR_SEC } from './config.js';
-
-// Fonte de verdade: edite só aqui.
-const FILTROS = {
-  'Streamings':['netflix', 'spotify', 'disney', 'prime', 'max', 'paramount', 'hbo', 'globoplay', 'deezer',
-                'twitch', 'crunchyroll', 'apple', 'soundcloud', 'kick', 'zoom', 'tomato'
-                ],
-  'Dev':       ['github', 'gitlab', 'vercel', 'xano', 'heroku', 'digitalocean',
-                'aws', 'azure', 'cloud', 'firebase', 'hackerone', 'microsoft', 
-                'oracle', 'render', 'supabase', 'wordpress', 'redhat'
-                ],
-  'Bancos':    ['nubank', 'inter', 'itau', 'bradesco', 'c6', 'santander', 'next', 'neon', 'pagbank', 'picpay', 
-                'mercadopago', 'banco', 'xp', 'mercado pago'
-                ],
-  'Jogos':     ['steam', 'epic', 'riot', 'xbox', 'psn', 'playstation', 'roblox', 'hytale',
-                'rainboow', 'supercell', 'blizzard', 'origin', 'gog', 'ubisoft', 'nintendo'
-                ],
-  'Social':    ['instagram', 'facebook', 'twitter', 'x', 'tiktok', 'discord', 'linkedin', 'pinterest',
-                'twitter', 'reddit', 'snapchat', 'telegram', 'whatsapp', 'messenger'
-                ],
-  'Email':     ['outlook', 'yahoo', 'proton', 'zoho', 'gmail', 'hotmail', 'icloud'
-
-                ],
-  'Pessoal':   ['gov', 'vertibular', 'inss', 'cnh', 'fgts', 'trabalho', 'correios', 'notebook', 'pc',
-                'sed', 'sala do futuro'
-                ],
-  'Lojas':     ['magalu', 'magazine', 'americanas', 'mercadolivre', 'shopee',
-                'submarino', 'amazon', 'carrefour', 'casasbahia', 'centauro', 
-                'netshoes', 'ponto frio', 'extra', 'fast shop', 'kalunga', 
-                'mercado livre', 'kabum', 'terabyte', 'pichau', 'ifood', 'keeta', 'uber', '99', 'rappi',
-                'loggi', 'droga', 'nike', 'shein', 'adidas', 'reebok', 'fila', 'new balance', 'puma',
-                'asics', 'vans', 'converse', 'aliexpress', 'wish', 'ebay', 'renner', 'mequi', 'burger', 'bk'
-                ]
-};
-
-// Gerado a partir do FILTROS — não precisa mexer.
-const CAT_LOOKUP = Object.entries(FILTROS).reduce((acc, [categoria, servicos]) => {
-  servicos.forEach((s) => { acc[s] = categoria; });
-  return acc;
-}, {});
-
-const guessCategory = (s = '') => CAT_LOOKUP[s.trim().toLowerCase()] || 'Outros';
 
 const TITLES = { cofre:'Cofre', favorites:'Favoritos', categories:'Categorias', security:'Segurança', settings:'Ajustes' };
 
@@ -125,7 +84,6 @@ function statTile(bg, color, iconName, n, t) {
 
 function buildCard(p) {
   const s = scoreStrength(p.password);
-  const logo = iconFor(p.service);
   const dots = el('span', { class: 'dots', text: '••••••••••', dataset: { pw: p.password, shown: '0' } });
 
   const revealI = icon('ti-eye');
@@ -144,7 +102,7 @@ function buildCard(p) {
 
   const rows = [
     el('div', { class: 'card-top' }, [
-      el('div', { class: 'svc-ic', style: `background:${logo.bg};color:${logo.fg}`, text: logo.initials }),
+      buildServiceIcon(p.service),
       el('div', { class: 'svc-meta' }, [
         el('div', { class: 'name', text: p.service }),
         el('div', { class: 'cat', text: p.category }),
@@ -212,7 +170,7 @@ function buildChips() {
 }
 
 function renderCofre(area) {
-  area.append(el('p', { class: 'welcome', text: `Bem-vindo de volta, ${currentUser?.username || ''} ` }));
+  area.append(el('p', { class: 'welcome', text: `Bem-vindo de volta, ${currentUser?.username || ''} 👋` }));
   area.append(el('div', { class: 'stats' }, [
     statTile('var(--acc-bg)', 'var(--acc-h)', 'ti-key', passwords.length, 'Senhas guardadas'),
     statTile('rgba(45,212,167,.13)', 'var(--strong)', 'ti-shield-check', countLevel('strong'), 'Senhas fortes'),
@@ -254,13 +212,12 @@ function renderSecurity(area) {
   const weakList = passwords.filter((p) => scoreStrength(p.password).level === 'weak');
   area.append(el('h3', { class: 'section-title', text: `Senhas fracas · ${weakList.length}` }));
   if (weakList.length === 0) {
-    area.append(el('div', { class: 'sec-item' }, [el('span', { class: 'muted', text: 'Nenhuma senha fraca.' })]));
+    area.append(el('div', { class: 'sec-item' }, [el('span', { class: 'muted', text: 'Nenhuma senha fraca. 🎉' })]));
   } else {
     const list = el('div', { class: 'sec-list' });
     weakList.forEach((p) => {
-      const logo = iconFor(p.service);
       list.append(el('div', { class: 'sec-item' }, [
-        el('div', { class: 'svc-ic', style: `background:${logo.bg};color:${logo.fg}`, text: logo.initials }),
+        buildServiceIcon(p.service),
         el('div', { class: 'grow' }, [el('div', { text: p.service }), el('div', { class: 'muted', text: p.category })]),
         el('span', { class: 'sec-badge weak', text: 'Fraca' }),
         el('button', { class: 'btn btn-sm', text: 'Melhorar', onClick: () => openModal(p) }),
@@ -274,7 +231,7 @@ function renderSecurity(area) {
   const reused = Object.values(byPw).filter((g) => g.length > 1);
   area.append(el('h3', { class: 'section-title', text: `Senhas reutilizadas · ${reused.length}` }));
   if (reused.length === 0) {
-    area.append(el('div', { class: 'sec-item' }, [el('span', { class: 'muted', text: 'Nenhuma senha repetida.' })]));
+    area.append(el('div', { class: 'sec-item' }, [el('span', { class: 'muted', text: 'Nenhuma senha repetida. 👏' })]));
   } else {
     const list = el('div', { class: 'sec-list' });
     reused.forEach((g) => {
@@ -317,6 +274,7 @@ function renderSettings(area) {
       el('p', { class: 'hint', text: 'Excluir a conta apaga você e todas as suas senhas. Não dá pra desfazer.' }),
       el('button', { class: 'btn btn-danger', text: 'Excluir minha conta', onClick: removeAccount }),
     ]),
+    el('button', { class: 'btn settings-logout', onClick: logout }, [icon('ti-logout'), ' Sair da conta']),
   ]));
 }
 
@@ -428,10 +386,11 @@ $('closeModalBtn').addEventListener('click', closeModal);
 $('savePasswordBtn').addEventListener('click', save);
 $('passwordModal').addEventListener('click', (e) => { if (e.target.id === 'passwordModal') closeModal(); });
 $('searchInput').addEventListener('input', (e) => { searchTerm = e.target.value.trim().toLowerCase(); render(); });
-$('logoutBtn').addEventListener('click', () => {
+function logout() {
   localStorage.removeItem('authToken'); localStorage.removeItem('userID'); localStorage.removeItem('username');
   location.href = 'pages/login.html';
-});
+}
+$('logoutBtn').addEventListener('click', logout);
 
 // ===================== fluxo principal =====================
 async function init() {

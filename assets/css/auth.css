@@ -18,3 +18,9 @@
 .resend.disabled{color:var(--tx3);cursor:default;}
 .auth-back{text-align:center;margin-top:8px;}
 .auth-back a{color:var(--tx3);font-size:12.5px;}
+
+@media (max-width:760px){
+  .auth-wrap{padding:16px;}
+  .auth-card{padding:26px 20px;}
+  .auth-card .input{font-size:16px;}  /* evita zoom no iOS */
+}
