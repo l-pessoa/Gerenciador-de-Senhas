@@ -16,17 +16,18 @@ const FILTROS = {
                 ],
   'Dev':       ['github', 'gitlab', 'vercel', 'xano', 'heroku', 'digitalocean',
                 'aws', 'azure', 'cloud', 'firebase', 'hackerone', 'microsoft', 
-                'oracle', 'render', 'supabase', 'wordpress', 'redhat'
+                'oracle', 'render', 'supabase', 'wordpress', 'redhat', 'huawei',
+                'cpanel', 'servidor', 'hostinger', 'hostgator', 'kinghost', 'locaweb'
                 ],
   'Bancos':    ['nubank', 'inter', 'itau', 'bradesco', 'c6', 'santander', 'next', 'neon', 'pagbank', 'picpay', 
-                'mercadopago', 'banco', 'xp', 'mercado pago'
+                'mercadopago', 'banco', 'xp', 'mercado pago', 'caixa'
                 ],
   'Jogos':     ['steam', 'epic', 'riot', 'xbox', 'psn', 'playstation', 'roblox', 'hytale',
                 'rainboow', 'supercell', 'blizzard', 'origin', 'gog', 'ubisoft', 'nintendo',
                 'rockstar', 'epicgames', 'riotgames'
                 ],
   'Social':    ['instagram', 'facebook', 'twitter', 'x', 'tiktok', 'discord', 'linkedin', 'pinterest',
-                'twitter', 'reddit', 'snapchat', 'telegram', 'whatsapp', 'messenger'
+                'twitter', 'reddit', 'snapchat', 'telegram', 'whatsapp', 'messenger', 'pastebin'
                 ],
   'Email':     ['outlook', 'yahoo', 'proton', 'zoho', 'gmail', 'hotmail', 'icloud'
 
@@ -39,7 +40,11 @@ const FILTROS = {
                 'netshoes', 'ponto frio', 'extra', 'fast shop', 'kalunga', 
                 'mercado livre', 'kabum', 'terabyte', 'pichau', 'ifood', 'keeta', 'uber', '99', 'rappi',
                 'loggi', 'droga', 'nike', 'shein', 'adidas', 'reebok', 'fila', 'new balance', 'puma',
-                'asics', 'vans', 'converse', 'aliexpress', 'wish', 'ebay', 'renner', 'mequi', 'burger', 'bk'
+                'asics', 'vans', 'converse', 'aliexpress', 'wish', 'ebay', 'renner', 'mequi', 'burger king', 'bk'
+                ],
+  'Hacking':   ['tryhackme', 'hackthebox', 'splunk', 'wazuh', 'portswigger'
+                ],
+  'Navegadores':['firefox', 'chrome', 'edge', 'brave', 'vivaldi', 'duckduckgo', 'opera', 'operagx'
                 ]
 };
 
