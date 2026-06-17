@@ -30,7 +30,6 @@ const FILTROS = {
                 'twitter', 'reddit', 'snapchat', 'telegram', 'whatsapp', 'messenger', 'pastebin'
                 ],
   'Email':     ['outlook', 'yahoo', 'proton', 'zoho', 'gmail', 'hotmail', 'icloud'
-
                 ],
   'Pessoal':   ['gov', 'vertibular', 'inss', 'cnh', 'fgts', 'trabalho', 'correios', 'notebook', 'pc',
                 'sed', 'sala do futuro'
