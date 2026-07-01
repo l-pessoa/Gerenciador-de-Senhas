@@ -4,5 +4,5 @@
 export const BASE_URL = 'https://x8ki-letl-twmt.n7.xano.io/api:Whyi2nVf/gs';
 
 export const OTP_RESEND_COOLDOWN = 30; // segundos antes de poder reenviar OTP
-export const AUTO_LOCK_MINUTES   = 10; // trava o cofre por inatividade
+export const AUTO_LOCK_MINUTES   = 60; // trava por inatividade — alinhado com a 1h do token
 export const CLIPBOARD_CLEAR_SEC = 15; // limpa a senha copiada do clipboard
